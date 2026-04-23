@@ -11,23 +11,49 @@
         :root { --p-bg: #0c40bb; --n-col: #ffffff; --out: #54301d; --btm: #0b08d4; --c-let: #e32b2b; --c-num: #1e40af; }
         body { background-color: #475569; font-family: 'Arial Black', sans-serif; overflow-x: hidden; }
         * { font-weight: 950 !important; }
-        .main-app-box { border: 10px solid var(--out); margin: 10px auto; border-radius: 40px; background: #f1f5f9; overflow-x: hidden; transition: 0.3s; }
+        
+        .main-app-box { border: 10px solid var(--out); margin: 10px auto; border-radius: 40px; background: #f1f5f9; overflow-x: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .premium-header { background-color: var(--p-bg); padding: 25px; border-bottom: 10px solid var(--btm); position: relative; }
-        .cat-card { background: #fff; border: 5px solid var(--out); border-radius: 20px; text-align: center; padding: 10px; position: relative; }
-        .btn-style { border-bottom: 6px solid #000; color: #fff !important; cursor: pointer; transition: 0.1s; text-transform: uppercase; }
+        
+        /* 3D Category Card Style */
+        .cat-card { 
+            background: #fff; 
+            border: 4px solid var(--out); 
+            border-radius: 20px; 
+            text-align: center; 
+            padding: 15px 10px; 
+            position: relative;
+            box-shadow: 8px 8px 0px var(--out); /* 3D Shadow */
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .cat-card:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0px var(--out); }
+
+        .btn-style { 
+            border-bottom: 6px solid rgba(0,0,0,0.4); 
+            color: #fff !important; 
+            cursor: pointer; 
+            transition: 0.1s; 
+            text-transform: uppercase; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
         .btn-style:active { transform: translateY(3px); border-bottom-width: 3px; }
+        
         .cp-card { background: #fff; width: 98%; max-width: 1300px; border-radius: 40px; padding: 20px; border: 10px solid #000; max-height: 95vh; overflow-y: auto; }
         .setting-row { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 4px 10px; border: 2px solid #000; border-radius: 10px; margin-bottom: 2px; font-size: 11px; }
         .setting-row input { border: 1px solid #ccc; text-align: center; border-radius: 5px; }
-        .filter-btn-active { background-color: #ef4444 !important; border: 3px solid #000 !important; }
+        .filter-btn-active { background-color: #ef4444 !important; border: 3px solid #000 !important; box-shadow: none !important; transform: translateY(2px); }
         .section-title { background: #1e3a8a; color: white; padding: 2px 10px; font-size: 10px; text-transform: uppercase; margin-top: 10px; }
-        #startDateDisplay { font-size: 16px !important; color: #ffeb3b; font-weight: bold !important; }
-        #expiryDisplay { font-size: 14px !important; color: #ff9800; font-weight: bold !important; }
-
-        /* Modified Action Bar Style */
-        .action-bar { display: flex; width: 100%; background: #000; padding: 5px; gap: 5px; }
-        .action-btn { flex: 1; padding: 12px 0; border: 3px solid #fff; color: #fff; font-size: 14px; text-align: center; cursor: pointer; border-radius: 10px; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
-        .action-btn.active { background: #ffeb3b; color: #000; border-color: #000; }
+        
+        /* Action Bar 3D Style */
+        .action-bar { display: flex; width: 100%; background: #000; padding: 8px; gap: 8px; }
+        .action-btn { 
+            flex: 1; padding: 12px 0; border: 3px solid #fff; color: #fff; font-size: 14px; 
+            text-align: center; cursor: pointer; border-radius: 12px; transition: 0.2s; 
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 0 #444;
+        }
+        .action-btn.active { background: #ffeb3b; color: #000; border-color: #000; box-shadow: none; transform: translateY(4px); }
         .bell-btn { background: #facc15; color: #000; }
     </style>
 </head>
@@ -38,9 +64,9 @@
         <div class="premium-header">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-4">
-                    <button id="backBtn" onclick="location.reload()" class="bg-red-600 w-12 h-12 rounded-full border-4 border-black text-white text-2xl">⬅</button>
+                    <button id="backBtn" onclick="location.reload()" class="bg-red-600 w-12 h-12 rounded-full border-4 border-black text-white text-2xl shadow-lg">⬅</button>
                     <div>
-                        <h1 id="dispTitle" class="text-4xl italic uppercase" style="color: var(--n-col);">SAHAYARAJ-2026</h1>
+                        <h1 id="dispTitle" class="text-4xl italic uppercase" style="color: var(--n-col); text-shadow: 3px 3px 0 #000;">SAHAYARAJ-2026</h1>
                         <div id="liveDateTime" class="text-yellow-300 font-bold" style="font-size: 14px;"></div>
                         <p id="startDateDisplay" class="mb-1"></p>
                         <p id="expiryDisplay" class="mt-1"></p>
@@ -49,9 +75,9 @@
                 <div class="flex items-center gap-6">
                     <div class="text-right text-white">
                         <p class="text-xs opacity-70">RECORDS: <span id="recCount" class="text-yellow-400">0</span></p>
-                        <h2 id="mainTotal" class="text-4xl">₹0</h2>
+                        <h2 id="mainTotal" class="text-4xl" style="text-shadow: 2px 2px 0 #000;">₹0</h2>
                     </div>
-                    <button onclick="openSettings()" class="text-5xl text-white">⚙️</button>
+                    <button onclick="openSettings()" class="text-5xl text-white hover:rotate-90 transition-transform">⚙️</button>
                 </div>
             </div>
         </div>
@@ -66,51 +92,52 @@
             <div id="viewBOTH" onclick="setViewMode('BOTH')" class="action-btn">BOTH</div>
         </div>
 
-        <div class="p-0">
-            <div id="catGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6"></div>
+        <div class="p-4">
+            <div id="catGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-5 mb-4"></div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white p-5 rounded-3xl border-4 border-black">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-3xl border-4 border-black shadow-[10px_10px_0px_#000]">
                     <h3 class="text-xl border-b-4 border-green-600 mb-4 italic uppercase">New Entry</h3>
-                    <div class="grid grid-cols-2 gap-3">
-                        <input type="date" id="eDate" class="border-2 border-black p-2 rounded">
-                        <input type="tel" id="eMob" placeholder="Mobile" class="border-2 border-black p-2 rounded">
-                        <select id="eCat" class="border-2 border-black p-2 rounded"></select>
-                        <input type="text" id="eDesc" placeholder="Remark" class="border-2 border-black p-2 rounded">
-                        <input type="number" id="eAmt" placeholder="Amount" class="border-2 border-black p-2 rounded">
-                        <select id="eType" class="border-2 border-black p-2 rounded"><option value="CR">IN (+)</option><option value="DR">OUT (-)</option></select>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="hidden" id="editId">
+                        <input type="date" id="eDate" class="border-2 border-black p-3 rounded-xl">
+                        <input type="tel" id="eMob" placeholder="Mobile" class="border-2 border-black p-3 rounded-xl">
+                        <select id="eCat" class="border-2 border-black p-3 rounded-xl"></select>
+                        <input type="text" id="eDesc" placeholder="Remark" class="border-2 border-black p-3 rounded-xl">
+                        <input type="number" id="eAmt" placeholder="Amount" class="border-2 border-black p-3 rounded-xl">
+                        <select id="eType" class="border-2 border-black p-3 rounded-xl"><option value="CR">IN (+)</option><option value="DR">OUT (-)</option></select>
                     </div>
-                    <button onclick="saveData()" class="w-full py-4 mt-5 rounded-xl text-xl btn-style bg-green-600">SAVE ✅</button>
+                    <button onclick="saveData()" id="saveBtn" class="w-full py-4 mt-6 rounded-xl text-xl btn-style bg-green-600">SAVE ✅</button>
                 </div>
 
-                <div class="bg-white p-5 rounded-3xl border-4 border-black">
+                <div class="bg-white p-6 rounded-3xl border-4 border-black shadow-[10px_10px_0px_#000]">
                     <h3 class="text-xl border-b-4 border-blue-600 mb-4 italic uppercase">Search & Tools</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
-                        <input type="date" id="fDate" class="text-xs border-2 border-black p-1">
-                        <input type="date" id="tDate" class="text-xs border-2 border-black p-1">
-                        <input type="tel" id="sMob" placeholder="Mobile" class="text-xs border-2 border-black p-1">
-                        <input type="text" id="sDesc" placeholder="Remark Search" class="text-xs border-2 border-black p-1">
+                        <input type="date" id="fDate" class="text-xs border-2 border-black p-2">
+                        <input type="date" id="tDate" class="text-xs border-2 border-black p-2">
+                        <input type="tel" id="sMob" placeholder="Mobile" class="text-xs border-2 border-black p-2">
+                        <input type="text" id="sDesc" placeholder="Remark Search" class="text-xs border-2 border-black p-2">
                     </div>
                     <div id="filterCatList" class="flex flex-wrap gap-2 mb-4"></div>
                     
-                    <div class="grid grid-cols-4 gap-2">
-                        <button id="pdfBtn" onclick="downloadPDF()" class="bg-orange-600 py-3 rounded-lg btn-style text-[9px]">PDF</button>
-                        <button id="waBtn" onclick="sendWhatsApp()" class="bg-green-600 py-3 rounded-lg btn-style text-[9px]">W/APP</button>
-                        <button id="impBtn" onclick="document.getElementById('impFile').click()" class="bg-blue-600 py-3 rounded-lg btn-style text-[9px]">IMPORT</button>
-                        <button id="expBtn" onclick="exportData()" class="bg-purple-600 py-3 rounded-lg btn-style text-[9px]">EXPORT</button>
-                        <button onclick="promptAddCat()" class="bg-cyan-600 py-3 rounded-lg btn-style text-[9px]">ADD CAT</button>
-                        <button onclick="promptDelCat()" class="bg-pink-600 py-3 rounded-lg btn-style text-[9px]">DEL CAT</button>
-                        <button onclick="promptDriveUrl()" class="bg-yellow-600 py-3 rounded-lg btn-style text-[9px]">DRIVE URL</button>
-                        <button id="delAllBtn" onclick="deleteAll()" class="bg-red-600 py-3 rounded-lg btn-style text-[9px]">DEL ALL</button>
+                    <div class="grid grid-cols-4 gap-3">
+                        <button id="pdfBtn" onclick="downloadPDF()" class="bg-orange-600 py-3 rounded-lg btn-style text-[10px]">PDF</button>
+                        <button id="waBtn" onclick="sendWhatsApp()" class="bg-green-600 py-3 rounded-lg btn-style text-[10px]">W/APP</button>
+                        <button id="impBtn" onclick="document.getElementById('impFile').click()" class="bg-blue-600 py-3 rounded-lg btn-style text-[10px]">IMPORT</button>
+                        <button id="expBtn" onclick="exportData()" class="bg-purple-600 py-3 rounded-lg btn-style text-[10px]">EXPORT</button>
+                        <button onclick="promptAddCat()" class="bg-cyan-600 py-3 rounded-lg btn-style text-[10px]">ADD CAT</button>
+                        <button onclick="promptDelCat()" class="bg-pink-600 py-3 rounded-lg btn-style text-[10px]">DEL CAT</button>
+                        <button onclick="promptDriveUrl()" class="bg-yellow-600 py-3 rounded-lg btn-style text-[10px]">DRIVE URL</button>
+                        <button id="delAllBtn" onclick="deleteAll()" class="bg-red-600 py-3 rounded-lg btn-style text-[10px]">DEL ALL</button>
                     </div>
                     <input type="file" id="impFile" class="hidden" onchange="importData(event)">
-                    <button onclick="refresh()" class="w-full bg-slate-800 text-white py-3 mt-3 rounded-xl btn-style">SEARCH DATA 🔎</button>
+                    <button onclick="refresh()" class="w-full bg-slate-800 text-white py-4 mt-4 rounded-xl btn-style">SEARCH DATA 🔎</button>
                 </div>
             </div>
 
-            <div class="mt-6 bg-white border-4 border-black rounded-3xl overflow-hidden">
+            <div class="mt-8 bg-white border-4 border-black rounded-3xl overflow-hidden shadow-2xl">
                 <table class="w-full text-sm">
-                    <thead class="bg-black text-white"><tr><th class="p-2">DATE</th><th class="p-2">MOBILE</th><th class="p-2">CAT</th><th class="p-2">REMARK</th><th class="p-2 text-right">AMOUNT</th><th class="p-2 text-center">ACTION</th></tr></thead>
+                    <thead class="bg-black text-white"><tr><th class="p-3">DATE</th><th class="p-3">MOBILE</th><th class="p-3">CAT</th><th class="p-3">REMARK</th><th class="p-3 text-right">AMOUNT</th><th class="p-3 text-center">ACTION</th></tr></thead>
                     <tbody id="resTable" class="text-center"></tbody>
                 </table>
             </div>
@@ -196,33 +223,21 @@ function init() {
     document.getElementById('impBtn').style.display = cfg.swImp ? 'block' : 'none';
     document.getElementById('expBtn').style.display = cfg.swExp ? 'block' : 'none';
 
-    if(cfg.startingDate) {
-        document.getElementById('startDateDisplay').innerText = "FROM: " + cfg.startingDate.split('-').reverse().join('/');
-    }
-
+    if(cfg.startingDate) { document.getElementById('startDateDisplay').innerText = "FROM: " + cfg.startingDate.split('-').reverse().join('/'); }
     if(cfg.expiryDate) {
         let exp = new Date(cfg.expiryDate);
         exp.setDate(exp.getDate() - 1);
         document.getElementById('expiryDisplay').innerText = "RENEWAL: " + exp.toLocaleDateString('en-GB');
     }
-    
-    startClock();
-    renderUI(); 
-    refresh();
+    startClock(); renderUI(); refresh();
 }
 
-function startClock() {
-    setInterval(() => {
-        const now = new Date();
-        document.getElementById('liveDateTime').innerHTML = `${now.toLocaleDateString('en-GB')} | ${now.toLocaleTimeString('en-GB')}`;
-    }, 1000);
-}
+function startClock() { setInterval(() => { const now = new Date(); document.getElementById('liveDateTime').innerHTML = `${now.toLocaleDateString('en-GB')} | ${now.toLocaleTimeString('en-GB')}`; }, 1000); }
 
 function renderUI() {
     const grid = document.getElementById('catGrid'), eSel = document.getElementById('eCat'), fList = document.getElementById('filterCatList');
     grid.innerHTML = ""; eSel.innerHTML = ""; 
     fList.innerHTML = `<button onclick="toggleFilter('ALL')" id="btn_ALL" class="bg-blue-900 text-white px-3 py-1 rounded-lg btn-style text-[10px] filter-btn-active">ALL</button>`;
-    
     cfg.cats.forEach((c) => {
         grid.innerHTML += `
             <div class="cat-card">
@@ -241,22 +256,50 @@ function setViewMode(mode) {
     refresh();
 }
 
-function saveConfig() { localStorage.setItem('saha_v66_cfg', JSON.stringify(cfg)); }
+// EDIT FUNCTION ADDED HERE
+function editRow(id) {
+    const item = db.find(x => x.id === id);
+    if(item) {
+        document.getElementById('editId').value = item.id;
+        document.getElementById('eDate').value = item.date;
+        document.getElementById('eMob').value = item.mob === "-" ? "" : item.mob;
+        document.getElementById('eCat').value = item.cat;
+        document.getElementById('eDesc').value = item.desc === "-" ? "" : item.desc;
+        document.getElementById('eAmt').value = item.amt;
+        document.getElementById('eType').value = item.type;
+        document.getElementById('saveBtn').innerText = "UPDATE 🖋️";
+        document.getElementById('saveBtn').classList.replace('bg-green-600', 'bg-blue-600');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+}
 
-function getFilteredData() {
-    const fD = document.getElementById('fDate').value, tD = document.getElementById('tDate').value, 
-          sM = document.getElementById('sMob').value, sDes = document.getElementById('sDesc').value.toLowerCase();
+function saveData() {
+    const d = document.getElementById('eDate').value, a = document.getElementById('eAmt').value, editId = document.getElementById('editId').value;
+    if(!d || !a) return alert("DATE AND AMOUNT REQUIRED!");
     
-    return db.filter(t => {
-        const mBell = (!cfg.startingDate || t.date >= cfg.startingDate);
-        const mCat = (activeFilters.length === 0 || activeFilters.includes(t.cat));
-        const mDate = (!fD || t.date >= fD) && (!tD || t.date <= tD);
-        const mMob = (!sM || t.mob.includes(sM));
-        const mDesc = (!sDes || t.desc.toLowerCase().includes(sDes));
-        const mView = (currentViewMode === "BOTH" || t.type === currentViewMode);
-        
-        return mBell && mCat && mDate && mMob && mDesc && mView;
-    });
+    let entry = { 
+        id: editId ? parseInt(editId) : Date.now(), 
+        date: d, 
+        mob: document.getElementById('eMob').value || "-", 
+        cat: document.getElementById('eCat').value, 
+        desc: document.getElementById('eDesc').value || "-", 
+        amt: a, 
+        type: document.getElementById('eType').value 
+    };
+
+    if(editId) {
+        const idx = db.findIndex(x => x.id == editId);
+        db[idx] = entry;
+        document.getElementById('editId').value = "";
+        document.getElementById('saveBtn').innerText = "SAVE ✅";
+        document.getElementById('saveBtn').classList.replace('bg-blue-600', 'bg-green-600');
+    } else {
+        db.push(entry);
+    }
+
+    localStorage.setItem('saha_v66_db', JSON.stringify(db));
+    refresh();
+    document.getElementById('eAmt').value = ""; document.getElementById('eDesc').value = "";
 }
 
 function refresh() {
@@ -270,15 +313,15 @@ function refresh() {
         let v = (t.type === "CR") ? amt : -amt; 
         if(tempSums.hasOwnProperty(t.cat)) tempSums[t.cat] += v; 
         grand += v;
-        html += `<tr class="border-b" style="font-size:${cfg.fsEnt}px">
-            <td class="p-2">${t.date.split('-').reverse().join('/')}</td>
-            <td class="p-2">${t.mob}</td>
-            <td class="p-2">${t.cat}</td>
-            <td class="p-2 text-blue-700">${t.desc}</td>
-            <td class="p-2 text-right ${t.type==='CR'?'text-green-600':'text-red-600'}">₹${amt.toLocaleString()}</td>
-            <td class="p-2 flex justify-center gap-2">
-                ${cfg.swPen ? `<button onclick="editRow(${t.id})" class="text-blue-600">🖋️</button>` : ''}
-                ${cfg.swTrDel ? `<button onclick="del(${t.id})" class="text-red-600">✖</button>` : ''}
+        html += `<tr class="border-b hover:bg-gray-100" style="font-size:${cfg.fsEnt}px">
+            <td class="p-3">${t.date.split('-').reverse().join('/')}</td>
+            <td class="p-3">${t.mob}</td>
+            <td class="p-3">${t.cat}</td>
+            <td class="p-3 text-blue-700">${t.desc}</td>
+            <td class="p-3 text-right ${t.type==='CR'?'text-green-600':'text-red-600'}">₹${amt.toLocaleString()}</td>
+            <td class="p-3 flex justify-center gap-4">
+                ${cfg.swPen ? `<button onclick="editRow(${t.id})" class="text-xl">🖋️</button>` : ''}
+                ${cfg.swTrDel ? `<button onclick="del(${t.id})" class="text-xl text-red-600">✖</button>` : ''}
             </td>
         </tr>`;
     });
@@ -288,14 +331,12 @@ function refresh() {
     cfg.cats.forEach(c => { if(document.getElementById('sum_'+c)) document.getElementById('sum_'+c).innerText = (tempSums[c] || 0).toLocaleString(); });
 }
 
-function saveData() {
-    const d = document.getElementById('eDate').value, a = document.getElementById('eAmt').value;
-    if(!d || !a) return alert("DATE AND AMOUNT REQUIRED!");
-    if(cfg.cats.length === 0) return alert("ADD A CATEGORY FIRST!");
-    let entry = { id: Date.now(), date: d, mob: document.getElementById('eMob').value || "-", cat: document.getElementById('eCat').value, desc: document.getElementById('eDesc').value || "-", amt: a, type: document.getElementById('eType').value };
-    db.push(entry); localStorage.setItem('saha_v66_db', JSON.stringify(db));
-    refresh();
-    document.getElementById('eAmt').value = ""; document.getElementById('eDesc').value = "";
+function getFilteredData() {
+    const fD = document.getElementById('fDate').value, tD = document.getElementById('tDate').value, sM = document.getElementById('sMob').value, sDes = document.getElementById('sDesc').value.toLowerCase();
+    return db.filter(t => {
+        const mBell = (!cfg.startingDate || t.date >= cfg.startingDate), mCat = (activeFilters.length === 0 || activeFilters.includes(t.cat)), mDate = (!fD || t.date >= fD) && (!tD || t.date <= tD), mMob = (!sM || t.mob.includes(sM)), mDesc = (!sDes || t.desc.toLowerCase().includes(sDes)), mView = (currentViewMode === "BOTH" || t.type === currentViewMode);
+        return mBell && mCat && mDate && mMob && mDesc && mView;
+    });
 }
 
 function openSettings() { 
@@ -343,7 +384,7 @@ function saveSettings() {
     cfg.swPdf = document.getElementById('swPdf').checked; cfg.swWa = document.getElementById('swWa').checked;
     cfg.adminPin = document.getElementById('setAdminPin').value; cfg.loginPin = document.getElementById('setLoginPin').value;
     cfg.expiryDate = document.getElementById('setExpDate').value;
-    saveConfig(); location.reload();
+    localStorage.setItem('saha_v66_cfg', JSON.stringify(cfg)); location.reload();
 }
 
 function exportData() {
@@ -363,7 +404,8 @@ function importData(event) {
     if(event.target.files[0]) reader.readAsText(event.target.files[0]);
 }
 
-function setStartingDate() { let v = document.getElementById('bellStartDate').value; if(v) { cfg.startingDate = v; saveConfig(); init(); } }
+function setStartingDate() { let v = document.getElementById('bellStartDate').value; if(v) { cfg.startingDate = v; localStorage.setItem('saha_v66_cfg', JSON.stringify(cfg)); init(); } }
+
 function toggleFilter(cat) { 
     const btnAll = document.getElementById('btn_ALL');
     if(cat === 'ALL') { activeFilters = []; document.querySelectorAll('#filterCatList button').forEach(b => b.classList.remove('filter-btn-active')); btnAll.classList.add('filter-btn-active'); } 
@@ -376,48 +418,28 @@ function toggleFilter(cat) {
     } 
     refresh(); 
 }
+
 function closeSettings() { document.getElementById('setModal').classList.add('hidden'); }
 function del(id) { if(confirm("DELETE?")) { db = db.filter(x => x.id !== id); localStorage.setItem('saha_v66_db', JSON.stringify(db)); refresh(); } }
 function deleteAll() { if(confirm("DELETE ALL?")) { db = []; localStorage.setItem('saha_v66_db', JSON.stringify(db)); refresh(); } }
 
 function promptAddCat() {
     const name = prompt("ENTER NEW CATEGORY NAME:").trim().toUpperCase();
-    if(name && !cfg.cats.includes(name)) {
-        cfg.cats.push(name);
-        saveConfig(); init();
-    } else if(name) { alert("DUPLICATE OR INVALID NAME!"); }
+    if(name && !cfg.cats.includes(name)) { cfg.cats.push(name); localStorage.setItem('saha_v66_cfg', JSON.stringify(cfg)); init(); } else if(name) { alert("DUPLICATE OR INVALID NAME!"); }
 }
 
 function promptDelCat() {
     if(cfg.cats.length === 0) return alert("NO CATEGORIES TO DELETE!");
-    const list = cfg.cats.join("\n");
-    const name = prompt("TYPE CATEGORY NAME TO DELETE:\n\n" + list).trim().toUpperCase();
-    if(cfg.cats.includes(name)) {
-        if(confirm(`SURE TO DELETE ${name}?`)) {
-            cfg.cats = cfg.cats.filter(c => c !== name);
-            saveConfig(); init();
-        }
-    } else if(name) { alert("CATEGORY NOT FOUND!"); }
+    const list = cfg.cats.join("\n"), name = prompt("TYPE CATEGORY NAME TO DELETE:\n\n" + list).trim().toUpperCase();
+    if(cfg.cats.includes(name)) { if(confirm(`SURE TO DELETE ${name}?`)) { cfg.cats = cfg.cats.filter(c => c !== name); localStorage.setItem('saha_v66_cfg', JSON.stringify(cfg)); init(); } } else if(name) { alert("CATEGORY NOT FOUND!"); }
 }
 
-function promptDriveUrl() {
-    const url = prompt("PASTE GOOGLE DRIVE FOLDER URL:", cfg.driveUrl || "");
-    if(url !== null) {
-        cfg.driveUrl = url.trim();
-        saveConfig();
-        alert("DRIVE URL SAVED!");
-    }
-}
+function promptDriveUrl() { const url = prompt("PASTE GOOGLE DRIVE FOLDER URL:", cfg.driveUrl || ""); if(url !== null) { cfg.driveUrl = url.trim(); localStorage.setItem('saha_v66_cfg', JSON.stringify(cfg)); alert("DRIVE URL SAVED!"); } }
 
 function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    let filtered = getFilteredData();
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
-    doc.text(cfg.title, 105, 20, {align: 'center'});
-    let summaryData = [];
-    let grandTotal = 0;
+    const { jsPDF } = window.jspdf; const doc = new jsPDF(); let filtered = getFilteredData();
+    doc.setFont("helvetica", "bold"); doc.setFontSize(20); doc.text(cfg.title, 105, 20, {align: 'center'});
+    let summaryData = [], grandTotal = 0;
     cfg.cats.forEach((c) => {
         let catSum = 0;
         filtered.forEach(t => { if(t.cat === c) catSum += (t.type === "CR" ? parseFloat(t.amt) : -parseFloat(t.amt)); });
@@ -426,21 +448,14 @@ function downloadPDF() {
     });
     doc.autoTable({ body: summaryData, startY: 40, theme: 'grid' });
     doc.text(`GRAND TOTAL: RS. ${grandTotal.toLocaleString()}`, 14, doc.lastAutoTable.finalY + 10);
-    doc.autoTable({ 
-        head: [['DATE', 'MOBILE', 'CAT', 'REMARK', 'AMOUNT', 'TYPE']], 
-        body: filtered.map(t => [t.date.split('-').reverse().join('/'), t.mob, t.cat, t.desc, t.amt.toLocaleString(), t.type]),
-        startY: doc.lastAutoTable.finalY + 20
-    });
+    doc.autoTable({ head: [['DATE', 'MOBILE', 'CAT', 'REMARK', 'AMOUNT', 'TYPE']], body: filtered.map(t => [t.date.split('-').reverse().join('/'), t.mob, t.cat, t.desc, t.amt.toLocaleString(), t.type]), startY: doc.lastAutoTable.finalY + 20 });
     doc.save(`${cfg.title}_Report.pdf`);
 }
 
 function sendWhatsApp() {
-    let filtered = getFilteredData();
-    let msg = `*${cfg.title} SUMMARY*\n`;
-    let grand = 0;
+    let filtered = getFilteredData(), msg = `*${cfg.title} SUMMARY*\n`, grand = 0;
     cfg.cats.forEach(c => {
-        let s = 0;
-        filtered.forEach(t => { if(t.cat === c) s += (t.type === "CR" ? parseFloat(t.amt) : -parseFloat(t.amt)); });
+        let s = 0; filtered.forEach(t => { if(t.cat === c) s += (t.type === "CR" ? parseFloat(t.amt) : -parseFloat(t.amt)); });
         if(s !== 0) msg += `\n${c}: ₹${s.toLocaleString()}`;
         grand += s;
     });
