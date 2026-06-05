@@ -24,7 +24,7 @@
         #startDateDisplay { font-size: 16px !important; color: #ffeb3b; font-weight: bold !important; }
         #expiryDisplay { font-size: 14px !important; color: #ff9800; font-weight: bold !important; }
 
-        /* பளபளக்கும் பச்சை LED */
+        /* பளபளக்கும் பச்சை LED வடிவமைப்பு */
         .g-led {
             width: 45px;
             height: 45px;
@@ -41,12 +41,12 @@
             text-shadow: 0 0 8px #00ff33;
         }
 
-        /* எளிய மேட்ரிக்ஸ் ஸ்க்ரோலிங் பாக்ஸ் */
+        /* மேட்ரிக்ஸ் பாக்ஸ் வடிவமைப்பு */
         .matrix-box {
             width: 100%;
             background-color: #000;
             color: #00ff33;
-            padding: 10px;
+            padding: 12px;
             border-radius: 15px;
             border: 4px solid #333;
             margin-bottom: 15px;
@@ -205,6 +205,7 @@
 </div>
 
 <script>
+// லோக்கல் ஸ்டோரேஜ் அமைப்புகள் உங்களது அசல் குறியீட்டின்படி அப்படியே வைக்கப்பட்டுள்ளது
 let cfg = JSON.parse(localStorage.getItem('saha_v66_cfg')) || {
     "title":"SAHAYARAJ-2026", "headCol":"#0c40bb", "nameCol":"#ffffff", "outCol":"#54301d", "btmCol":"#0b08d4", "catLetCol":"#e32b2b", "catNumCol":"#1e40af",
     "scrW":95, "fsDT":22, "fsCatL":14, "fsCatN":28, "fsEnt":14,
