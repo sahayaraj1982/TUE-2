@@ -24,7 +24,7 @@
         #startDateDisplay { font-size: 16px !important; color: #ffeb3b; font-weight: bold !important; }
         #expiryDisplay { font-size: 14px !important; color: #ff9800; font-weight: bold !important; }
 
-        /* பளபளக்கும் பச்சை LED வடிவமைப்பு */
+        /* பளபளக்கும் பச்சை LED */
         .g-led {
             width: 45px;
             height: 45px;
@@ -41,30 +41,28 @@
             text-shadow: 0 0 8px #00ff33;
         }
 
-        /* மேட்ரிக்ஸ் அனிமேஷன் பாக்ஸ் - படிவத்தை மறைக்காமல் கீழே வைக்கப்பட்டுள்ளது */
-        .matrix-container {
+        /* எளிய மேட்ரிக்ஸ் ஸ்க்ரோலிங் பாக்ஸ் */
+        .matrix-box {
             width: 100%;
-            height: 80px;
             background-color: #000;
-            border: 4px solid #000;
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            margin-top: 15px;
-        }
-        .falling-header {
-            position: absolute;
             color: #00ff33;
-            font-size: 15px;
-            font-weight: bold;
-            text-shadow: 0 0 5px #00ff33;
-            animation: fallDown 2.2s linear forwards;
+            padding: 10px;
+            border-radius: 15px;
+            border: 4px solid #333;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow: hidden;
+            white-space: nowrap;
         }
-        @keyframes fallDown {
-            0% { top: -30px; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
+        .matrix-marquee {
+            display: inline-block;
+            padding-left: 100%;
+            animation: matrixScroll 15s linear infinite;
+        }
+        @keyframes matrixScroll {
+            0% { transform: translate3d(0, 0, 0); }
+            10% { transform: translate3d(-100%, 0, 0); }
         }
     </style>
 </head>
@@ -107,7 +105,10 @@
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white p-5 rounded-3xl border-4 border-black">
-                    <h3 class="text-xl border-b-4 border-green-600 mb-4 italic uppercase">New Entry</h3>
+                    <div class="matrix-box">
+                        <span class="matrix-marquee">SYS-ONLINE // DATE | MOBILE | CATEGORY | REMARK | AMOUNT // SAHAYARAJ SYSTEM OK...</span>
+                    </div>
+
                     <div class="grid grid-cols-2 gap-3">
                         <input type="date" id="eDate" class="border-2 border-black p-2 rounded">
                         <input type="tel" id="eMob" placeholder="Mobile" class="border-2 border-black p-2 rounded">
@@ -117,8 +118,6 @@
                         <select id="eType" class="border-2 border-black p-2 rounded"><option value="CR">IN (+)</option><option value="DR">OUT (-)</option></select>
                     </div>
                     <button onclick="saveData()" class="w-full py-4 mt-5 rounded-xl text-xl btn-style bg-green-600">SAVE ✅</button>
-                    
-                    <div id="matrixContainer" class="matrix-container"></div>
                 </div>
 
                 <div class="bg-white p-5 rounded-3xl border-4 border-black">
@@ -246,25 +245,6 @@ function init() {
     startClock();
     renderUI(); 
     refresh();
-    startMatrixEffect(["DATE", "MOBILE", "CAT", "REMARK", "AMOUNT"]);
-}
-
-function startMatrixEffect(headers) {
-    const container = document.getElementById('matrixContainer');
-    if(!container) return;
-    container.innerHTML = ""; 
-    let index = 0;
-    setInterval(() => {
-        if (index >= headers.length) index = 0;
-        const headerEl = document.createElement('div');
-        headerEl.className = 'falling-header';
-        headerEl.innerText = headers[index];
-        const randomX = Math.floor(Math.random() * (container.clientWidth - 90)) + 10;
-        headerEl.style.left = randomX + 'px';
-        container.appendChild(headerEl);
-        headerEl.addEventListener('animationend', () => headerEl.remove());
-        index++;
-    }, 1000);
 }
 
 function startClock() {
@@ -346,7 +326,6 @@ function refresh() {
         if(tempSums.hasOwnProperty(t.cat)) tempSums[t.cat] += v; 
         grand += v;
         
-        // ஐடி நேரங்களை நீக்கி சுத்தமான தேதியாக காட்டும் பகுதி
         let displayDate = t.date;
         if(displayDate.includes('T')) {
             displayDate = displayDate.split('T')[0];
