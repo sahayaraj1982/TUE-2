@@ -1,0 +1,19 @@
+body { margin: 0; font-family: sans-serif; background: #111; color: white; }
+.wrapper { max-width: 500px; margin: auto; height: 100vh; background: #111; border: 1px solid #222; position: relative; }
+header { background: linear-gradient(145deg, #ffd700, #333); padding: 18px; text-align: center; color: #111; font-weight: bold; position: relative; }
+
+/* G-LED Indicator Styles */
+.indicator-container { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); }
+.g-led { 
+    width: 28px; height: 28px; border-radius: 50%; background: #222; 
+    color: #ff4444; border: 2px solid #ff4444;
+    display: flex; align-items: center; justify-content: center; font-weight: 900;
+}
+/* கூகுள் சீட் இணைக்கப்பட்டால் பச்சை நிறம் மற்றும் ஒளிரும் அனிமேஷன் */
+.g-led.connected { color: #00ff00; border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
+.g-led.loading { animation: spin 1s linear infinite; border-top-color: #fff; }
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.hidden { display: none; }
+#loading { position: fixed; top: 10px; right: 10px; background: gold; color: #111; padding: 5px 10px; border-radius: 10px; z-index: 1000; }
